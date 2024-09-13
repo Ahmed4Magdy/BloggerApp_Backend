@@ -3,6 +3,7 @@ package com.example.Springboot.controller;
 import com.example.Springboot.Entity.User;
 import com.example.Springboot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,11 +17,23 @@ public class UserController {
 
     @PostMapping("/signup")
     public ResponseEntity<String> signup(@RequestBody User user) {
-        String response = userService.signup(user);
-        return ResponseEntity.ok(response);
+        try {
+            String response = userService.signup(user);
+            return ResponseEntity.ok(response);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+
+        }
     }
 
 
-
+//    @PostMapping("/login")
+//    public ResponseEntity<String> login(@RequestBody User user) {
+//        String response = userService.login(user);
+//        return ResponseEntity.ok(response);
+//    }
+//
 
 }
+
