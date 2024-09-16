@@ -20,7 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @Transactional
-public class UserControllerIntegrationTest {
+public class UserControllerSignup {
 
     @Autowired
     private MockMvc mockMvc;
