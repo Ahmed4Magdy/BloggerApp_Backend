@@ -21,22 +21,23 @@ public class UserService {
         return "User signed up successfully!";
     }
 
-
     private String encodePassword(String password) {
         return password;
     }
 
 
+    public String login(User user) {
+        User existingUser = userRepository.findByEmail(user.getEmail())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        if (user.getPassword().equals(existingUser.getPassword())) {
+            // Return success message or token if needed
+            return "Login successful!";
+        } else {
+            throw new RuntimeException("Invalid credentials");
+        }
+    }
+
+
 }
 
-//    public String login(User user) {
-//        User existingUser = userRepository.findByEmail(user.getEmail())
-//                .orElseThrow(() -> new RuntimeException("User not found"));
-//
-//        if (user.getPassword().equals(existingUser.getPassword())) {
-//            // Return success message or token if needed
-//            return "Login successful!";
-//        } else {
-//            throw new RuntimeException("Invalid credentials");
-//        }
-//    }
