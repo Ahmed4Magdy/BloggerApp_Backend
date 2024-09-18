@@ -28,12 +28,4 @@ public class UserController {
     }
 
 
-//    @PostMapping("/login")
-//    public ResponseEntity<String> login(@RequestBody User user) {
-//        String response = userService.login(user);
-//        return ResponseEntity.ok(response);
-//    }
-//
-
 }
-
