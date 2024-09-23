@@ -1,0 +1,1 @@
+INSERT INTO userDTO (fullname, email, password) VALUES ('AhmedMagdy', 'Ahmed@example.com', 'ahmed@2468##')

@@ -1,19 +1,20 @@
 package com.example.Springboot.controller;
 
 
-import com.example.Springboot.Entity.User;
+import com.example.Springboot.Entity.UserDTO;
 import com.example.Springboot.Repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.BeforeEach;
+import com.github.springtestdbunit.annotation.DatabaseSetup;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -28,23 +29,16 @@ public class UserControllerLogin {
     @Autowired
     private ObjectMapper objectMapper;
 
-    private User existingUser;
 
-    @BeforeEach
-    public void setup() {
-        userRepository.deleteAll(); // Clean up the repository before each test
-        existingUser = new User();
-        existingUser.setEmail("Ahmed@example.com");
-        existingUser.setPassword("a22");
-        userRepository.save(existingUser);
-    }
 
     @Test
+    @DatabaseSetup("Migration/test-user-data.sql")
     public void testLoginSuccess() throws Exception {
 
-        User loginRequest = new User();
+        UserDTO loginRequest = new UserDTO();
+        loginRequest.setFullname("AhmedMagdy");
         loginRequest.setEmail("Ahmed@example.com");
-        loginRequest.setPassword("a22");
+        loginRequest.setPassword("Ahmed@2468");
 
         // Perform the login request
         mockMvc.perform(post("/api/login")
@@ -55,11 +49,13 @@ public class UserControllerLogin {
     }
 
     @Test
+    @DatabaseSetup("Migration/test-user-data.sql")
     public void testLoginFailure() throws Exception {
         // Create a login request with incorrect password
-        User loginRequest = new User();
-        loginRequest.setEmail("Ahmed@example.com");
-        loginRequest.setPassword("a202");
+        UserDTO loginRequest = new UserDTO();
+        loginRequest.setFullname("AhmedMagdy");
+        loginRequest.setEmail("Ahmedclear@example.com");
+        loginRequest.setPassword("hassan@342#3");
 
         // Perform the login request
         mockMvc.perform(post("/api/login")
