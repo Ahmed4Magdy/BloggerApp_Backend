@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = "http://localhost:4200")
+
 public class UserController {
 
     @Autowired
@@ -20,10 +22,10 @@ public class UserController {
 
         try {
             String response = userService.signup(userDTo);
-            return ResponseEntity.ok(response);
+            return ResponseEntity.ok("{\"message\":\"" + response + "\"}"); // Wrap the response in a JSON format
 
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("{\"message\":\"" + e.getMessage() + "\"}");
 
         }
     }
@@ -32,10 +34,11 @@ public class UserController {
     public ResponseEntity<String> login(@Valid @RequestBody UserDTO userDTO) {
         try {
             String response = userService.login(userDTO);
-            return ResponseEntity.ok(response);
+            return ResponseEntity.ok("{\"message\":\"" + response + "\"}"); // Wrap the response in a JSON format
+
         } catch (Exception e) {
 
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage()); //403
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("{\"message\":\"" + e.getMessage() + "\"}"); //403
         }
 
 
